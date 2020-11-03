@@ -1,0 +1,18 @@
+CREATE TABLE fact(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    text TEXT NOT NULL,
+    createdAt TEXT NOT NULL,
+    updatedAT TEXT NOT NULL
+);
+
+insertItem:
+INSERT OR REPLACE INTO fact(text, createdAt, updatedAT) VALUES (?, ?, ?);
+
+selectAll:
+SELECT * FROM fact ORDER BY id;
+
+deleteAll:
+DELETE FROM fact;
+
+selectItem:
+SELECT * FROM fact WHERE id = ?;
