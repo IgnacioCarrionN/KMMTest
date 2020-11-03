@@ -1,8 +1,8 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("kotlin-android-extensions")
-    kotlin("plugin.serialization") version "1.4.10"
+    kotlin(Plugins.multiplatform)
+    id(Plugins.androidLibrary)
+    id(Plugins.kotlinAndroidExt)
+    kotlin(Plugins.kotlinSerialization) version "1.4.10"
 }
 
 repositories {
@@ -26,37 +26,36 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-core:1.4.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+                implementation(CommonDependencies.Ktor.ktorClientCore)
+                implementation(CommonDependencies.Kotlin.serialization)
 
-                implementation("org.kodein.di:kodein-di:7.1.0")
+                implementation(CommonDependencies.KodeIn.di)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation("io.mockk:mockk-common:1.10.0")
-                //implementation("io.ktor:ktor-client-mock:1.4.1")
+                implementation(kotlin(CommonTestDependencies.Kotlin.testCommon))
+                implementation(kotlin(CommonTestDependencies.Kotlin.testAnnotations))
+                implementation(CommonTestDependencies.mockk)
 
                 implementation(project(Modules.common))
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("androidx.core:core-ktx:1.3.2")
+                implementation(AndroidDependencies.AndroidX.coreKtx)
 
-                implementation("io.ktor:ktor-client-android:1.4.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0")
-                implementation("io.ktor:ktor-client-serialization-jvm:1.4.1")
+                implementation(AndroidDependencies.Ktor.androidClient)
+                implementation(AndroidDependencies.Kotlin.coroutinesAndroid)
+                implementation(AndroidDependencies.Ktor.serializationJvm)
 
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(AndroidTestDependencies.mockk)
-                implementation(kotlin("test-junit"))
-                implementation("io.ktor:ktor-client-mock-jvm:1.4.1")
+                implementation(kotlin(AndroidTestDependencies.testJunit))
+                implementation(AndroidTestDependencies.ktorClientMock)
             }
         }
         val iosMain by getting
@@ -70,13 +69,13 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Project.Android.compileSdkVersion)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(Project.Android.minSdkVersion)
+        targetSdkVersion(Project.Android.targetSdkVersion)
+        versionCode = Project.Android.versionCode
+        versionName = Project.Android.versionName
     }
     buildTypes {
         getByName("release") {

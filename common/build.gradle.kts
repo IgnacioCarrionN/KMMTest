@@ -1,12 +1,12 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("kotlin-android-extensions")
+    kotlin(Plugins.multiplatform)
+    id(Plugins.androidLibrary)
+    id(Plugins.kotlinAndroidExt)
 }
-group = "dev.carrion.kmmtest"
-version = "1.0-SNAPSHOT"
+group = Project.group
+version = Project.version
 
 repositories {
     gradlePluginPortal()
@@ -26,37 +26,37 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
+                implementation(CommonDependencies.Kotlin.coroutines)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin(CommonTestDependencies.Kotlin.testCommon))
+                implementation(kotlin(CommonTestDependencies.Kotlin.testAnnotations))
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.8")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
+                implementation(IOSDependencies.Kotlin.coroutinesNative)
+                implementation(IOSDependencies.Kotlin.coroutinesCore)
             }
         }
         val iosTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin(CommonTestDependencies.Kotlin.testCommon))
+                implementation(kotlin(CommonTestDependencies.Kotlin.testAnnotations))
             }
         }
     }
 }
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Project.Android.compileSdkVersion)
     sourceSets["main"].manifest.srcFile("src\\androidMain\\AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(Project.Android.minSdkVersion)
+        targetSdkVersion(Project.Android.targetSdkVersion)
+        versionCode = Project.Android.versionCode
+        versionName = Project.Android.versionName
     }
     buildTypes {
         getByName("release") {

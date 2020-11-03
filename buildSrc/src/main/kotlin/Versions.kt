@@ -2,6 +2,7 @@ object Versions {
 
     object Kotlin {
         const val coroutines = "1.4.0"
+        const val coroutinesNative = "1.3.8"
         const val serialization = "1.0.1"
     }
 
@@ -22,4 +23,6 @@ object Versions {
     const val ktor = "1.4.1"
 
     const val materialDesign = "1.2.1"
+
+    const val kodein = "7.1.0"
 }

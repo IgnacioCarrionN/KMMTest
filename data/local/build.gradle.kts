@@ -1,8 +1,8 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("kotlin-android-extensions")
-    id("com.squareup.sqldelight")
+    kotlin(Plugins.multiplatform)
+    id(Plugins.androidLibrary)
+    id(Plugins.kotlinAndroidExt)
+    id(Plugins.sqlDelight)
 }
 
 repositories {
@@ -26,44 +26,44 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":common"))
+                implementation(project(Modules.common))
 
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
+                implementation(CommonDependencies.Kotlin.coroutines)
 
-                implementation("com.squareup.sqldelight:runtime:1.4.3")
-                implementation("com.squareup.sqldelight:coroutines-extensions:1.4.3")
+                implementation(CommonDependencies.SqlDelight.runtime)
+                implementation(CommonDependencies.SqlDelight.coroutinesExt)
 
-                implementation("org.kodein.di:kodein-di:7.1.0")
+                implementation(CommonDependencies.KodeIn.di)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(project(":common"))
+                implementation(project(Modules.common))
 
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation("io.mockk:mockk-common:1.10.0")
+                implementation(kotlin(CommonTestDependencies.Kotlin.testCommon))
+                implementation(kotlin(CommonTestDependencies.Kotlin.testAnnotations))
+                implementation(CommonTestDependencies.mockk)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("androidx.core:core-ktx:1.3.2")
-                implementation("com.squareup.sqldelight:android-driver:1.4.3")
+                implementation(AndroidDependencies.AndroidX.coreKtx)
+                implementation(AndroidDependencies.SqlDelight.androidDriver)
 
-                implementation("org.kodein.di:kodein-di:7.1.0")
+                implementation(CommonDependencies.KodeIn.di)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation("io.mockk:mockk:1.10.0")
-                implementation(kotlin("test-junit"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.0")
-                implementation("androidx.arch.core:core-testing:2.1.0")
+                implementation(AndroidTestDependencies.mockk)
+                implementation(kotlin(AndroidTestDependencies.testJunit))
+                implementation(AndroidTestDependencies.coroutinesTest)
+                implementation(AndroidTestDependencies.coreTesting)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:native-driver:1.4.3")
+                implementation(IOSDependencies.SqlDelight.nativeDriver)
             }
         }
     }
@@ -76,13 +76,13 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Project.Android.compileSdkVersion)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(Project.Android.minSdkVersion)
+        targetSdkVersion(Project.Android.targetSdkVersion)
+        versionCode = Project.Android.versionCode
+        versionName = Project.Android.versionName
     }
     buildTypes {
         getByName("release") {
@@ -96,7 +96,7 @@ android {
 }
 
 sqldelight {
-    database("KMMTest") { // This will be the name of the generated database class.
-        packageName = "dev.carrion.local"
+    database(Project.SqlDelight.databaseName) { // This will be the name of the generated database class.
+        packageName = Project.SqlDelight.packageName
     }
 }

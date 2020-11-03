@@ -1,8 +1,37 @@
+object Project {
+    const val group = "dev.carrion.kmmtest"
+    const val version = "1.0-SNAPSHOT"
+
+    object Android {
+        const val applicationId = "dev.carrion.kmmtest.androidApp"
+        const val compileSdkVersion = 29
+        const val minSdkVersion = 24
+        const val targetSdkVersion = 29
+        const val versionCode = 1
+        const val versionName = "1.0"
+    }
+
+    object SqlDelight {
+        const val databaseName = "KMMTest"
+        const val packageName = "dev.carrion.local"
+    }
+}
+
 object Modules {
     const val common = ":common"
     const val dataLocal = ":data:local"
     const val dataRemote = ":data:remote"
     const val dataRepository = ":data:repository"
+}
+
+object Plugins {
+    const val multiplatform = "multiplatform"
+    const val androidApplication = "com.android.application"
+    const val android = "android"
+    const val androidLibrary = "com.android.library"
+    const val kotlinAndroidExt = "kotlin-android-extensions"
+    const val sqlDelight = "com.squareup.sqldelight"
+    const val kotlinSerialization = "plugin.serialization"
 }
 
 object CommonDependencies {
@@ -22,6 +51,10 @@ object CommonDependencies {
     object Ktor {
         const val ktorClientCore = "io.ktor:ktor-client-core:${Versions.ktor}"
     }
+
+    object KodeIn {
+        const val di = "org.kodein.di:kodein-di:${Versions.kodein}"
+    }
 }
 
 object CommonTestDependencies {
@@ -35,7 +68,7 @@ object CommonTestDependencies {
 
 object IOSDependencies {
     object Kotlin {
-        const val coroutinesNative = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.Kotlin.coroutines}"
+        const val coroutinesNative = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.Kotlin.coroutinesNative}"
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.coroutines}"
     }
 
@@ -75,6 +108,10 @@ object AndroidDependencies {
         const val androidClient = "io.ktor:ktor-client-android:${Versions.ktor}"
         const val serializationJvm = "io.ktor:ktor-client-serialization-jvm:${Versions.ktor}"
     }
+
+    object KodeIn {
+        const val kodeinAndroidx = "org.kodein.di:kodein-di-framework-android-x:${Versions.kodein}"
+    }
 }
 
 object AndroidTestDependencies {
@@ -82,4 +119,6 @@ object AndroidTestDependencies {
     const val testJunit = "test-junit"
     const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Kotlin.coroutines}"
     const val coreTesting = "androidx.arch.core:core-testing:${Versions.AndroidX.coreTesting}"
+
+    const val ktorClientMock = "io.ktor:ktor-client-mock-jvm:${Versions.ktor}"
 }

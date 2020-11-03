@@ -1,10 +1,10 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    id("kotlin-android-extensions")
+    id(Plugins.androidApplication)
+    kotlin(Plugins.android)
+    id(Plugins.kotlinAndroidExt)
 }
-group = "dev.carrion.kmmtest"
-version = "1.0-SNAPSHOT"
+group = Project.group
+version = Project.version
 
 repositories {
     gradlePluginPortal()
@@ -28,17 +28,17 @@ dependencies {
     implementation(AndroidDependencies.AndroidX.fragmentKtx)
     implementation(AndroidDependencies.AndroidX.viewModelKtx)
     implementation(AndroidDependencies.AndroidX.liveDataKtx)
-    implementation("org.kodein.di:kodein-di:7.1.0")
-    implementation("org.kodein.di:kodein-di-framework-android-x:7.1.0")
+    implementation(CommonDependencies.KodeIn.di)
+    implementation(AndroidDependencies.KodeIn.kodeinAndroidx)
 }
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Project.Android.compileSdkVersion)
     defaultConfig {
-        applicationId = "dev.carrion.kmmtest.androidApp"
-        minSdkVersion(24)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Project.Android.applicationId
+        minSdkVersion(Project.Android.minSdkVersion)
+        targetSdkVersion(Project.Android.targetSdkVersion)
+        versionCode = Project.Android.versionCode
+        versionName = Project.Android.versionName
     }
     buildTypes {
         getByName("release") {

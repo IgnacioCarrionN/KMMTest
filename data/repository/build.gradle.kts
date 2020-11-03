@@ -1,7 +1,7 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("kotlin-android-extensions")
+    kotlin(Plugins.multiplatform)
+    id(Plugins.androidLibrary)
+    id(Plugins.kotlinAndroidExt)
 }
 
 repositories {
@@ -25,25 +25,24 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":common"))
-                implementation(project(":data:remote"))
-                implementation(project(":data:local"))
+                implementation(project(Modules.common))
+                implementation(project(Modules.dataRemote))
+                implementation(project(Modules.dataLocal))
 
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
-                implementation("org.kodein.di:kodein-di:7.1.0")
+                implementation(CommonDependencies.Kotlin.coroutines)
+                implementation(CommonDependencies.KodeIn.di)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("androidx.core:core-ktx:1.3.2")
-                implementation("org.kodein.di:kodein-di:7.1.0")
+                implementation(AndroidDependencies.AndroidX.coreKtx)
+                implementation(CommonDependencies.KodeIn.di)
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(AndroidTestDependencies.mockk)
-                implementation(kotlin("test-junit"))
-                implementation("io.ktor:ktor-client-mock-jvm:1.4.1")
+                implementation(kotlin(AndroidTestDependencies.testJunit))
             }
         }
         val iosMain by getting
@@ -57,13 +56,13 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Project.Android.compileSdkVersion)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        minSdkVersion(Project.Android.minSdkVersion)
+        targetSdkVersion(Project.Android.targetSdkVersion)
+        versionCode = Project.Android.versionCode
+        versionName = Project.Android.versionName
     }
     buildTypes {
         getByName("release") {
