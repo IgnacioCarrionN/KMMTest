@@ -34,13 +34,6 @@ jobs:
           ./gradlew build
           ./gradlew test
 
-      - name: Run instrumentation tests
-        if: matrix.os == 'macOS-latest' && matrix.job == 'instrumentation'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: ./gradlew connectedCheck build --stacktrace -PInstrumentation
-
       - name: Bundle the build report
         if: failure()
         run: find . -type d -name 'reports' | zip -@ -r build-reports.zip
