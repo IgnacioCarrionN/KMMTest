@@ -27,22 +27,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Change wrapper permissions
-          run: chmod +x ./gradlew
+        run: chmod +x ./gradlew
       - name: Run ubuntu tests
         if: matrix.os == 'ubuntu-latest' && matrix.job == 'test'
         run: |
-          sudo ./gradlew build
-          sudo ./gradlew test
+          ./gradlew build
+          ./gradlew test
 
       - name: Run instrumentation tests
         if: matrix.os == 'macOS-latest' && matrix.job == 'instrumentation'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          script: sudo ./gradlew connectedCheck build --stacktrace -PInstrumentation
+          script: ./gradlew connectedCheck build --stacktrace -PInstrumentation
       - name: Run ios tests
         if: matrix.os == 'macOS-latest' && matrix.job == 'test'
-        run: sudo ./gradlew iosX64Test --stacktrace
+        run: ./gradlew iosX64Test --stacktrace
 
       - name: Bundle the build report
         if: failure()
